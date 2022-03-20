@@ -108,7 +108,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://2f53ab0c.us-south.apigw.appdomain.cloud/dealerships/api/dealership"
+        url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
         # dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = get_dealers_from_cf(url)
@@ -120,7 +120,7 @@ def get_dealerships(request):
 
 def get_dealerships_by_id(request):
     if request.method == "GET":
-        url = "https://2f53ab0c.us-south.apigw.appdomain.cloud/dealerships/api/dealership?id="
+        url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/dealership?id="
         # Get dealers from the URL
         dealerships = get_dealer_by_id_from_cf(url, 4)
         # Concat all dealer's short name
@@ -131,7 +131,7 @@ def get_dealerships_by_id(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = "https://2f53ab0c.us-south.apigw.appdomain.cloud/review/api/review"
+        url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review"
         # Get reviews from the URL
         context["reviews"] = get_dealer_reviews_from_cf(url, dealer_id)
         context["dealer_id"] = dealer_id
@@ -154,7 +154,7 @@ def add_review(request, dealer_id):
     context = {}
     if request.method == "POST":
         if request.user.is_authenticated:
-            url = "https://2f53ab0c.us-south.apigw.appdomain.cloud/review/api/review"
+            url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review"
             review = dict()
             review["time"] = datetime.utcnow().isoformat()
             review["id"] = dealer_id
