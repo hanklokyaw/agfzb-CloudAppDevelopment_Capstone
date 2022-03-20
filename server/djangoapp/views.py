@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-# from .restapis import related methods
+from .restapis import related methods
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -154,4 +154,39 @@ def get_dealer_details(request, dealer_id):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+@csrf_exempt
+def add_review(request, dealer_id):
+    context = {}
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            url = "https://2f53ab0c.us-south.apigw.appdomain.cloud/review/api/review"
+            review = dict()
+            review["time"] = datetime.utcnow().isoformat()
+            review["id"] = dealer_id
+            review["review"] = request.POST["content"]
+            review["name"] = request.user.username
+            if request.POST["purchasecheck"] == "on":
+                review["purchase"] = True
+            carId = request.POST["car"]
+            cars = get_car_by_id(carId)
+            for car in cars:
+                review["car_make"] = car.name
+                review["car_model"] = car.carMake.name
+                review["car_year"] = car.year.year
+            json_payload = dict()
+            json_payload["review"] = review
+            post_request(url, json_payload, dealerId=dealer_id)
 
+            context["dealer_id"] = dealer_id
+            context["reviews"] = get_dealer_reviews_from_cf(url, dealer_id)
+            return render(request, 'djangoapp/dealer_details.html', context)
+            #redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+        else:
+            # if not auth, return to login page again
+            return render(request, 'djangoapp/login.html', context)
+    elif request.method == "GET":
+        # query cars
+        context["dealer_id"] = dealer_id
+        context["cars"] = get_dealer_cars(dealer_id)
+        print(context)
+        return render(request, 'djangoapp/add_review.html', context)
