@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 # from .models import related models
 from .restapis import get_dealers_from_cf, get_dealer_by_id_from_cf, get_dealer_reviews_from_cf, post_request, get_dealer_cars, get_car_by_id
 from django.contrib.auth import login, logout, authenticate
@@ -25,6 +26,7 @@ def about(request):
     if request.method == "GET":
         return render(request, 'djangoapp/about.html', context)
 
+
 # Create a `contact` view to return a static contact page
 #def contact(request):
 def contact(request):
@@ -32,9 +34,8 @@ def contact(request):
     if request.method == "GET":
         return render(request, 'djangoapp/contact.html', context)
 
+
 # Create a `login_request` view to handle sign in request
-# def login_request(request):
-# ...
 def login_request(request):
     context = {}
     # Handles POST request
@@ -100,15 +101,10 @@ def registration_request(request):
             return render(request, 'djangoapp/registration.html', context)
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
-def get_dealerships(request):
-    context = {}
-    if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
-
-
-# Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+# def get_dealerships(request):
+#     context = {}
+#     if request.method == "GET":
+#         return render(request, 'djangoapp/index.html', context)
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
@@ -150,7 +146,6 @@ def get_dealer_details(request, dealer_id):
         # return HttpResponse(reviews_sentiments)
         return render(request, 'djangoapp/dealer_details.html', context)
 
-        
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
