@@ -1,42 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
-        rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
-</head>
-
-<body>
-      {% include "djangoapp/header.html" %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <div class="about-title clearfix">
-                    <h1>About <span>Best Cars</span></h1>
-                    <h3> Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and
-                        imported cars at reasonable prices.
-                    </h3>
-                    <p class="about-paddingB">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet
-                        dolor libero, eget venenatis mauris finibus dictum. Vestibulum quis elit eget neque porttitor
-                        congue non sit amet dolor. Proin pretium purus a lorem ornare </p>
-                    <p>sed lobortis pulvinar. Integer laoreet mi id eros porta euismod. Suspendisse potenti. Nulla eros
-                        mauris, convallis et sem tempus, viverra hendrerit sapien</p>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dealership Review</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    
+    </head>
+    
+    <body>  
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/djangoapp">Home</a>
+                    <a class="navbar-brand" href="/djangoapp/about">About Us</a>
+                    <a class="navbar-brand" href="/djangoapp/contact">Contact Us</a>
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">                        
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username" >
+                                <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                <button class="btn btn-primary" type="submit">Login</button>
+                                <a class="btn btn-link" href="/djangoapp/registration">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
-            <div class="col-md-8 col-sm-8">
-                <div class="about-img">
-                    <img src="https://i.insider.com/592f4169b74af41b008b5977?width=1136&format=jpeg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
+        </nav>
+        <h1>
+        Welcome to Best Cars dealership, 
+        home to the best cars in North America. 
+        We sell domestic and imported cars at reasonable prices.
+        </h1>
+    </body>
 </html>
