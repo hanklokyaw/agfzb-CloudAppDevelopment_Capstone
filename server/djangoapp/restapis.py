@@ -102,9 +102,9 @@ def get_dealer_by_id_from_cf(url, dealerId):
 # - Get the returned sentiment label such as Positive or Negative
 def analyze_review_sentiments(dealerreview):
     # NLU api url/key
-    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/4651b5cd-97f0-4feb-bbd3-6428a40e2724"
-    api_key = "TAG05-_yHleAA6AJIMLB0BmJ-KApGlk2wEhPIFEl9LXA"
-
+    url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/dcad27f0-824d-47aa-a435-5b73460bc257"
+    api_key = "z_ZMJe3oMw5cZ8mGa131yDx3tH4e5X0aC26nxZztXsFh"
+ 
     # Call get_request with a URL parameter
     params = dict()
     params["api_key"] = api_key
