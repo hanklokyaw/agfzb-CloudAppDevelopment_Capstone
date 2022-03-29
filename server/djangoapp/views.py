@@ -93,7 +93,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/get-dealer"
+        url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/dealership"
         ## Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         ## Concat all dealer's short name
@@ -110,9 +110,9 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = 'https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/get-reviews'
+        url = 'https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review'
         reviews = get_dealer_reviews_from_cf(url, id=dealer_id)
-        url2 = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/get-dealer"
+        url2 = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url2, id=dealer_id)
         dealership = {}
@@ -128,7 +128,7 @@ def get_dealer_details(request, dealer_id):
 # ...
 def add_review(request, dealer_id):
     context = {}
-    dealer_url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/get-reviews"
+    dealer_url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review"
     dealer = get_dealer_reviews_from_cf(dealer_url, id=dealer_id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -158,6 +158,6 @@ def add_review(request, dealer_id):
             payload["car_year"] = int(car.year.strftime("%Y"))
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/post-review"
+            review_post_url = "https://25b5ddb1.au-syd.apigw.appdomain.cloud/api/review"
             post_request(review_post_url, new_payload, id=dealer_id)
         return redirect("djangoapp:dealer_details", id=dealer_id)
